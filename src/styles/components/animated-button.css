@@ -1,0 +1,156 @@
+.tb-animated-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: var(--button-color, #1d7afc);
+    color: var(--button-text-color, white);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    outline: none;
+    user-select: none;
+    z-index: 1;
+}
+
+.tb-animated-button:focus-visible {
+    outline: 3px solid rgba(29, 122, 252, 0.25);
+    outline-offset: 2px;
+}
+
+.tb-animated-button__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Shine Effect */
+.tb-animated-button--shine {
+    overflow: hidden;
+}
+
+.tb-animated-button__shine {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    transform: scale(0);
+    pointer-events: none;
+    z-index: 1;
+    animation: shineEffect 0.7s ease-out;
+}
+
+@keyframes shineEffect {
+    0% {
+        transform: scale(0);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+/* Magnetic Effect */
+.tb-animated-button--magnetic {
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tb-animated-button--magnetic:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Fill Effect */
+.tb-animated-button--fill {
+    background-color: transparent;
+    border: 2px solid var(--button-color, #1d7afc);
+    color: var(--button-color, #1d7afc);
+    transition: color 0.3s ease;
+}
+
+.tb-animated-button--fill .tb-animated-button__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--button-color, #1d7afc);
+    z-index: 1;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.tb-animated-button--fill:hover {
+    color: var(--button-text-color, white);
+}
+
+.tb-animated-button--fill:hover .tb-animated-button__fill {
+    transform: scaleX(1);
+}
+
+/* Border Dance Effect */
+.tb-animated-button--border-dance {
+    background-color: transparent;
+    border: none;
+    color: var(--button-color, #1d7afc);
+}
+
+.tb-animated-button--border-dance::before,
+.tb-animated-button--border-dance::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    border: 2px solid var(--button-color, #1d7afc);
+}
+
+.tb-animated-button--border-dance::before {
+    top: 0;
+    left: 0;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+.tb-animated-button--border-dance::after {
+    bottom: 0;
+    right: 0;
+    border-top: 0;
+    border-left: 0;
+}
+
+.tb-animated-button--border-dance:hover::before,
+.tb-animated-button--border-dance:hover::after {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    transition: width 0.3s, height 0.3s, opacity 0.3s;
+}
+
+/* Float Effect */
+.tb-animated-button--float {
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tb-animated-button--float:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tb-animated-button--float:active {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}

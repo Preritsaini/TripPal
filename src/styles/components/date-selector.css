@@ -1,0 +1,232 @@
+root {
+    --date-selector-bg: white;
+    --date-selector-border: #eaeaea;
+    --date-selector-text: #333;
+    --date-selector-day-bg: transparent;
+    --date-selector-day-hover: #f5f5f5;
+    --date-selector-selected-bg: #1d7afc;
+    --date-selector-selected-text: white;
+    --date-selector-today-border: #1d7afc;
+    --date-selector-disabled: #e0e0e0;
+    --date-selector-faded-text: #aaa;
+    --date-selector-highlight: rgba(255, 165, 0, 0.1);
+    --date-selector-highlight-border: orange;
+    --date-selector-range-bg: rgba(29, 122, 252, 0.1);
+    --date-selector-animation-duration: 300ms;
+}
+
+.tb-date-selector {
+    width: 100%;
+    max-width: 350px;
+    background-color: var(--date-selector-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    user-select: none;
+}
+
+/* Header with month/year display and navigation */
+.tb-date-selector__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid var(--date-selector-border);
+}
+
+.tb-date-selector__header-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--date-selector-text);
+}
+
+.tb-date-selector__nav-button {
+    background: none;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: var(--date-selector-text);
+}
+
+.tb-date-selector__nav-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tb-date-selector__nav-icon {
+    font-size: 14px;
+}
+
+/* Calendar Grid */
+.tb-date-selector__calendar {
+    padding: 8px;
+}
+
+.tb-date-selector__days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 8px;
+}
+
+.tb-date-selector__days-header.tb-date-selector__days-header--with-week-numbers {
+    grid-template-columns: auto repeat(7, 1fr);
+}
+
+.tb-date-selector__day-name {
+    text-align: center;
+    font-size: 12px;
+    padding: 8px 0;
+    color: var(--date-selector-faded-text);
+    font-weight: 500;
+}
+
+.tb-date-selector__week-number-header {
+    text-align: center;
+    font-size: 12px;
+    padding: 8px 0;
+    color: var(--date-selector-faded-text);
+    font-weight: 500;
+}
+
+/* Days Grid with Animation */
+.tb-date-selector__days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    transition: transform var(--date-selector-animation-duration) ease, opacity var(--date-selector-animation-duration) ease;
+}
+
+.tb-date-selector__days-grid--slide-left {
+    transform: translateX(-10px);
+    opacity: 0;
+}
+
+.tb-date-selector__days-grid--slide-right {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+/* Week layout */
+.tb-date-selector__week {
+    display: grid;
+    grid-template-columns: auto repeat(7, 1fr);
+    gap: 2px;
+}
+
+.tb-date-selector__week-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--date-selector-faded-text);
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+/* Day Styling */
+.tb-date-selector__day {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.tb-date-selector__day:hover:not(.tb-date-selector__day--disabled):not(.tb-date-selector__day--selected) {
+    background-color: var(--date-selector-day-hover);
+}
+
+.tb-date-selector__day-number {
+    font-size: 14px;
+    z-index: 1;
+}
+
+/* Day States */
+.tb-date-selector__day--faded .tb-date-selector__day-number {
+    color: var(--date-selector-faded-text);
+}
+
+.tb-date-selector__day--selected {
+    background-color: var(--date-selector-selected-bg);
+    color: var(--date-selector-selected-text);
+}
+
+.tb-date-selector__day--today {
+    font-weight: 600;
+}
+
+.tb-date-selector__day--today:not(.tb-date-selector__day--selected)::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--date-selector-today-border);
+    bottom: 3px;
+}
+
+.tb-date-selector__day--disabled {
+    color: var(--date-selector-disabled);
+    cursor: not-allowed;
+}
+
+.tb-date-selector__day--highlighted {
+    background-color: var(--date-selector-highlight);
+}
+
+.tb-date-selector__day--highlighted:not(.tb-date-selector__day--selected) {
+    border: 1px solid var(--date-selector-highlight-border);
+}
+
+/* Range Selection Styling */
+.tb-date-selector__day--range-start,
+.tb-date-selector__day--range-end {
+    background-color: var(--date-selector-selected-bg);
+    color: var(--date-selector-selected-text);
+    z-index: 2;
+}
+
+.tb-date-selector__day--range-start {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.tb-date-selector__day--range-end {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.tb-date-selector__day--in-range {
+    background-color: var(--date-selector-range-bg);
+    border-radius: 0;
+}
+
+/* Helper text */
+.tb-date-selector__helper-text {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--date-selector-faded-text);
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .tb-date-selector {
+        max-width: 100%;
+    }
+
+    .tb-date-selector__day {
+        height: 32px;
+    }
+}

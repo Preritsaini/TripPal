@@ -28,14 +28,21 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
         if (!navLoaded) return;
 
         const navItem = document.querySelector(`.nav-item[data-page="${currentPage}"]`);
-        if (!navItem || !indicatorRef.current) return;
+        if (!navItem || !indicatorRef.current || !navRef.current) return;
 
+        // Center the indicator under the active nav item
         const navItemRect = navItem.getBoundingClientRect();
         const navRect = navRef.current.getBoundingClientRect();
 
-        // Update indicator position
-        indicatorRef.current.style.width = `${navItemRect.width}px`;
-        indicatorRef.current.style.transform = `translateX(${navItemRect.left - navRect.left}px)`;
+        const itemWidth = navItemRect.width;
+        const itemLeft = navItemRect.left - navRect.left;
+
+        // Set width and position of the indicator
+        indicatorRef.current.style.width = `${itemWidth}px`;
+        indicatorRef.current.style.transform = `translateX(${itemLeft}px)`;
+
+        // Ensure the indicator is properly centered
+        indicatorRef.current.style.left = '0'; // Reset any left position that might be set
     }, [currentPage, navLoaded]);
 
     // Handle nav item click
@@ -52,7 +59,10 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
                         className={`nav-item ${currentPage === item.id ? 'active' : ''} ${navLoaded ? 'loaded' : ''}`}
                         onClick={() => handleNavClick(item.id)}
                         data-page={item.id}
-                        style={{ animationDelay: `${index * 0.1}s` }}
+                        style={{
+                            animationDelay: `${index * 0.1}s`,
+                            position: 'relative'  // Ensure position is relative
+                        }}
                     >
                         <span className="nav-icon">{item.icon}</span>
                         <span className="nav-label">{item.label}</span>

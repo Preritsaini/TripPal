@@ -1,0 +1,201 @@
+:root {
+    --modal-backdrop-color: rgba(0, 0, 0, 0.5);
+    --modal-bg-color: white;
+    --modal-header-border: rgba(0, 0, 0, 0.1);
+    --modal-footer-border: rgba(0, 0, 0, 0.1);
+    --modal-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --modal-close-hover: rgba(0, 0, 0, 0.1);
+    --modal-animation-duration: 300ms;
+}
+
+/* Modal Container */
+.tb-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--modal-animation-duration) ease, visibility var(--modal-animation-duration) ease;
+}
+
+.tb-modal--visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal Backdrop */
+.tb-modal__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-backdrop-color);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--modal-animation-duration) ease;
+}
+
+.tb-modal--visible .tb-modal__backdrop {
+    opacity: 1;
+}
+
+/* Modal Content */
+.tb-modal__content {
+    position: relative;
+    background-color: var(--modal-bg-color);
+    border-radius: 12px;
+    box-shadow: var(--modal-shadow);
+    max-height: calc(100vh - 40px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: transform var(--modal-animation-duration) ease, opacity var(--modal-animation-duration) ease;
+}
+
+.tb-modal--visible .tb-modal__content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Modal Sizes */
+.tb-modal__content--small {
+    width: 300px;
+    max-width: 100%;
+}
+
+.tb-modal__content--medium {
+    width: 500px;
+    max-width: 100%;
+}
+
+.tb-modal__content--large {
+    width: 800px;
+    max-width: 100%;
+}
+
+.tb-modal__content--full {
+    width: 95%;
+    height: 95%;
+    max-width: 1200px;
+}
+
+/* Modal Header */
+.tb-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--modal-header-border);
+}
+
+.tb-modal__title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.tb-modal__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.tb-modal__close:hover {
+    background-color: var(--modal-close-hover);
+}
+
+.tb-modal__close-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+/* Modal Body */
+.tb-modal__body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Modal Footer */
+.tb-modal__footer {
+    padding: 16px 20px;
+    border-top: 1px solid var(--modal-footer-border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* Animation Types */
+
+/* Fade Animation */
+.tb-modal--animation-fade .tb-modal__content {
+    transform: scale(1);
+}
+
+/* Slide Animation */
+.tb-modal--animation-slide .tb-modal__content {
+    transform: translateY(20px);
+}
+
+.tb-modal--animation-slide.tb-modal--visible .tb-modal__content {
+    transform: translateY(0);
+}
+
+/* Scale Animation */
+.tb-modal--animation-scale .tb-modal__content {
+    transform: scale(0.8);
+}
+
+.tb-modal--animation-scale.tb-modal--visible .tb-modal__content {
+    transform: scale(1);
+}
+
+/* Flip Animation */
+.tb-modal--animation-flip .tb-modal__content {
+    transform: perspective(600px) rotateX(-10deg);
+    transform-origin: top center;
+}
+
+.tb-modal--animation-flip.tb-modal--visible .tb-modal__content {
+    transform: perspective(600px) rotateX(0deg);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .tb-modal__content--medium,
+    .tb-modal__content--large {
+        width: 95%;
+    }
+
+    .tb-modal__header {
+        padding: 12px 16px;
+    }
+
+    .tb-modal__body {
+        padding: 16px;
+    }
+
+    .tb-modal__footer {
+        padding: 12px 16px;
+    }
+}

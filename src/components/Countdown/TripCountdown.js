@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import '../styles/components/countdown.css';
+import '/home/prerit/WebstormProjects/codecircuitproj/src/styles/components/countdown.css';
 
 const TripCountdown = ({ targetDate }) => {
-    // State for countdown values
+
     const [timeLeft, setTimeLeft] = useState({
         days: 0,
         hours: 0,
@@ -10,7 +10,7 @@ const TripCountdown = ({ targetDate }) => {
         seconds: 0
     });
 
-    // State for flip animation
+
     const [flipping, setFlipping] = useState({
         days: false,
         hours: false,
@@ -18,10 +18,9 @@ const TripCountdown = ({ targetDate }) => {
         seconds: false
     });
 
-    // Previous values for comparison
+
     const prevValues = useRef({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-    // Calculate time left
     useEffect(() => {
         const calculateTimeLeft = () => {
             const difference = new Date(targetDate) - new Date();

@@ -1,0 +1,189 @@
+:root {
+    --drag-handle-color: #bbb;
+    --drag-handle-hover-color: #999;
+    --drag-handle-active-color: #666;
+    --drag-handle-disabled-color: #ddd;
+    --drag-handle-pulse-color: rgba(29, 122, 252, 0.4);
+}
+
+.tb-drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    position: relative;
+    touch-action: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    user-select: none;
+}
+
+/* Handle orientation */
+.tb-drag-handle--vertical {
+    flex-direction: column;
+    gap: 3px;
+}
+
+.tb-drag-handle--horizontal {
+    flex-direction: row;
+    gap: 3px;
+}
+
+/* Handle states */
+.tb-drag-handle:hover:not(.tb-drag-handle--disabled) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.tb-drag-handle--dragging {
+    cursor: grabbing;
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.tb-drag-handle--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Variant: Default - three horizontal lines */
+.tb-drag-handle--default .tb-drag-handle__line {
+    display: block;
+    height: 2px;
+    width: 16px;
+    background-color: var(--drag-handle-color);
+    border-radius: 1px;
+    transition: background-color 0.2s;
+}
+
+.tb-drag-handle--default.tb-drag-handle--horizontal .tb-drag-handle__line {
+    height: 16px;
+    width: 2px;
+}
+
+.tb-drag-handle--default:hover:not(.tb-drag-handle--disabled) .tb-drag-handle__line {
+    background-color: var(--drag-handle-hover-color);
+}
+
+.tb-drag-handle--default.tb-drag-handle--dragging .tb-drag-handle__line {
+    background-color: var(--drag-handle-active-color);
+}
+
+/* Variant: Dots - six dots in a grid */
+.tb-drag-handle--dots {
+    gap: 2px;
+}
+
+.tb-drag-handle__dot-row {
+    display: flex;
+    gap: 2px;
+}
+
+.tb-drag-handle__dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--drag-handle-color);
+    transition: background-color 0.2s;
+}
+
+.tb-drag-handle--dots:hover:not(.tb-drag-handle--disabled) .tb-drag-handle__dot {
+    background-color: var(--drag-handle-hover-color);
+}
+
+.tb-drag-handle--dots.tb-drag-handle--dragging .tb-drag-handle__dot {
+    background-color: var(--drag-handle-active-color);
+}
+
+/* Variant: Lines - two lines */
+.tb-drag-handle--lines .tb-drag-handle__line {
+    display: block;
+    height: 2px;
+    width: 16px;
+    background-color: var(--drag-handle-color);
+    border-radius: 1px;
+    transition: background-color 0.2s;
+}
+
+.tb-drag-handle--lines.tb-drag-handle--horizontal .tb-drag-handle__line {
+    height: 16px;
+    width: 2px;
+}
+
+.tb-drag-handle--lines:hover:not(.tb-drag-handle--disabled) .tb-drag-handle__line {
+    background-color: var(--drag-handle-hover-color);
+}
+
+.tb-drag-handle--lines.tb-drag-handle--dragging .tb-drag-handle__line {
+    background-color: var(--drag-handle-active-color);
+}
+
+/* Variant: Minimal - no visual elements except on hover */
+.tb-drag-handle--minimal {
+    opacity: 0.4;
+    transition: opacity 0.2s;
+}
+
+.tb-drag-handle--minimal:hover:not(.tb-drag-handle--disabled),
+.tb-drag-handle--minimal.tb-drag-handle--dragging {
+    opacity: 1;
+}
+
+/* Pulse animation */
+.tb-drag-handle__pulse {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.tb-drag-handle--pulse .tb-drag-handle__pulse {
+    animation: dragHandlePulse 0.7s ease-out;
+}
+
+@keyframes dragHandlePulse {
+    0% {
+        transform: scale(1);
+        background-color: var(--pulse-color, var(--drag-handle-pulse-color));
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.5);
+        background-color: transparent;
+        opacity: 0;
+    }
+}
+
+/* Accessible focus styles */
+.tb-drag-handle:focus-visible {
+    outline: 2px solid var(--drag-handle-active-color);
+    outline-offset: 2px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .tb-drag-handle {
+        width: 32px;
+        height: 32px;
+    }
+
+    .tb-drag-handle--default .tb-drag-handle__line {
+        width: 20px;
+    }
+
+    .tb-drag-handle--default.tb-drag-handle--horizontal .tb-drag-handle__line {
+        height: 20px;
+    }
+
+    .tb-drag-handle--lines .tb-drag-handle__line {
+        width: 20px;
+    }
+
+    .tb-drag-handle--lines.tb-drag-handle--horizontal .tb-drag-handle__line {
+        height: 20px;
+    }
+}

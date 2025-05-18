@@ -1,0 +1,143 @@
+.tb-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Card Variants */
+.tb-card--default {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: none;
+}
+
+.tb-card--elevated {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    border: none;
+}
+
+.tb-card--outlined {
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.tb-card--interactive {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: none;
+    cursor: pointer;
+}
+
+/* Card Sizes */
+.tb-card--small {
+    padding: 12px;
+    max-width: 300px;
+}
+
+.tb-card--medium {
+    padding: 16px;
+    max-width: 400px;
+}
+
+.tb-card--large {
+    padding: 20px;
+    max-width: 500px;
+}
+
+/* Card Sections */
+.tb-card__header {
+    margin: -16px -16px 16px -16px;
+    padding: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.tb-card__footer {
+    margin: 16px -16px -16px -16px;
+    padding: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.tb-card__media {
+    margin: -16px -16px 16px -16px;
+    overflow: hidden;
+}
+
+.tb-card__media img,
+.tb-card__media video {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.tb-card__content {
+    flex: 1;
+}
+
+/* Card Animations */
+
+/* Hover Lift Animation */
+.tb-card--hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Hover Glow Animation */
+.tb-card--hover-glow {
+    overflow: visible;
+}
+
+.tb-card--hover-glow .tb-card__glow-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    opacity: 0;
+    box-shadow: 0 0 15px 5px rgba(29, 122, 252, 0.4);
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.tb-card--hover-glow:hover .tb-card__glow-effect {
+    opacity: 1;
+}
+
+/* Tilt Animation */
+.tb-card--tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.2s ease-out;
+}
+
+.tb-card--tilt:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Expand Animation */
+.tb-card--expand {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tb-card--expand:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Interactivity */
+.tb-card--clickable {
+    cursor: pointer;
+}
+
+.tb-card--clickable:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(29, 122, 252, 0.25), 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.tb-card--clickable:active {
+    transform: translateY(1px);
+}

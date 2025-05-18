@@ -33,6 +33,16 @@
     animation: floatIcon 3s infinite alternate ease-in-out;
 }
 
+.logo-blue-box {
+    background-color: #0077cc;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    font-weight: var(--font-weight-bold);
+    font-size: 1.2rem;
+}
+
 .logo-text {
     display: flex;
     flex-direction: column;
@@ -102,18 +112,16 @@
     transform: translateX(26px);
 }
 
-.toggle-thumb::before {
-    content: '☀️';
+.toggle-icon {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 12px;
-    transition: opacity 0.3s ease;
-}
-
-.theme-toggle.dark .toggle-thumb::before {
-    content: '🌙';
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Mobile menu */

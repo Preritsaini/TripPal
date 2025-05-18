@@ -8,7 +8,7 @@ const Footer = () => {
                 <div className="footer-brand">
                     <div className="footer-logo">
                         <div className="logo-icon">✈️</div>
-                        <div className="logo-text">TravelBuddy</div>
+                        <div className="logo-text">TripPal</div>
                     </div>
                     <div className="footer-tagline">Making travel planning simple</div>
                 </div>
@@ -16,7 +16,7 @@ const Footer = () => {
                 <div className="footer-credits">
                     <p>
                         Created for{' '}
-                        <span className="hackathon-name">Code Circuit Hackathon 2025</span>
+                        <span className="hackathon-name">CodeCircuit Hackathon 2025</span>
                     </p>
                     <div className="footer-animation">
                         <div className="plane-animation">

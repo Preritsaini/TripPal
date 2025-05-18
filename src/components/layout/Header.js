@@ -7,7 +7,6 @@ const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Handle scroll event to change header appearance
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
@@ -25,8 +24,8 @@ const Header = () => {
             <div className="header-content">
                 <div className="logo">
                     <div className="logo-icon">✈️</div>
+                    <div className="logo-blue-box">TripPal</div>
                     <div className="logo-text">
-                        <span className="logo-name">TravelBuddy</span>
                         <span className="logo-tagline">Your Adventure Companion</span>
                     </div>
                 </div>
@@ -37,7 +36,9 @@ const Header = () => {
                         onClick={toggleTheme}
                         title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
                     >
-                        <div className="toggle-thumb"></div>
+                        <div className="toggle-thumb">
+                            <span className="toggle-icon">{theme === 'dark' ? '🌙' : '☀️'}</span>
+                        </div>
                         <div className="toggle-track"></div>
                     </button>
 
