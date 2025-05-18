@@ -1,0 +1,370 @@
+.countdown-wrapper {
+    position: relative;
+    width: 100%;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    margin-bottom: 2rem;
+    min-height: 300px;
+    transition: all 0.5s var(--easing-standard);
+}
+
+/* Day/Night background */
+.sky-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.countdown-wrapper.day .sky-background {
+    background: linear-gradient(to bottom, #64b5f6, #bbdefb);
+    animation: daySkyColor 120s infinite alternate;
+}
+
+.countdown-wrapper.night .sky-background {
+    background: linear-gradient(to bottom, #1a237e, #311b92);
+    animation: nightSkyColor 120s infinite alternate;
+}
+
+/* Sun/Moon */
+.celestial-body {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    top: 40px;
+    right: 80px;
+    transform-origin: center;
+}
+
+.celestial-body.sun {
+    background: radial-gradient(circle, #ffeb3b, #ff9800);
+    box-shadow: 0 0 40px rgba(255, 235, 59, 0.8);
+    animation: sunPulse 10s infinite alternate, sunMove 120s infinite linear;
+}
+
+.celestial-body.moon {
+    background: radial-gradient(circle, #f5f5f5, #e0e0e0);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    animation: moonMove 120s infinite linear;
+}
+
+/* Clouds */
+.cloud {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    top: 30%;
+    animation-name: cloudMove;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.cloud:before,
+.cloud:after {
+    content: "";
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+}
+
+.cloud:before {
+    width: 60%;
+    height: 100%;
+    top: -40%;
+    left: 15%;
+}
+
+.cloud:after {
+    width: 55%;
+    height: 100%;
+    top: -30%;
+    right: 15%;
+}
+
+/* Stars */
+.star {
+    position: absolute;
+    background-color: #ffffff;
+    border-radius: 50%;
+    animation: twinkle ease-in-out infinite alternate;
+}
+
+/* Countdown Components */
+.countdown-title {
+    color: var(--text-color);
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s var(--easing-decelerate);
+}
+
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+    animation: slideUp 1s var(--easing-decelerate);
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0.25rem;
+}
+
+.countdown-separator {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    margin-top: -1.5rem;
+    animation: pulsate 1s infinite;
+}
+
+.countdown-label {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+
+/* Flip Card Animation */
+.flip-card {
+    perspective: 1000px;
+    width: 80px;
+    height: 100px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s var(--easing-bounce);
+    transform-style: preserve-3d;
+}
+
+.flip-card.flipping .flip-card-inner {
+    transform: rotateX(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+.countdown-wrapper.night .flip-card-front,
+.countdown-wrapper.night .flip-card-back {
+    background-color: rgba(42, 42, 56, 0.9);
+    color: #fff;
+}
+
+.flip-card-back {
+    transform: rotateX(180deg);
+}
+
+.countdown-message {
+    margin-top: 2rem;
+    color: var(--text-color);
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+    animation: fadeIn 1.5s var(--easing-decelerate);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes sunPulse {
+    0% {
+        box-shadow: 0 0 30px rgba(255, 235, 59, 0.6);
+        transform: scale(1);
+    }
+    100% {
+        box-shadow: 0 0 50px rgba(255, 235, 59, 0.8);
+        transform: scale(1.1);
+    }
+}
+
+@keyframes sunMove {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(-100px, 50px);
+    }
+    50% {
+        transform: translate(-50px, -30px);
+    }
+    75% {
+        transform: translate(70px, 20px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes moonMove {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(-70px, 30px);
+    }
+    50% {
+        transform: translate(-30px, -20px);
+    }
+    75% {
+        transform: translate(50px, 40px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes cloudMove {
+    0% {
+        transform: translateX(100vw);
+    }
+    100% {
+        transform: translateX(-100px);
+    }
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.2;
+        transform: scale(0.5);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes daySkyColor {
+    0% {
+        background: linear-gradient(to bottom, #64b5f6, #bbdefb);
+    }
+    50% {
+        background: linear-gradient(to bottom, #90caf9, #e3f2fd);
+    }
+    100% {
+        background: linear-gradient(to bottom, #42a5f5, #bbdefb);
+    }
+}
+
+@keyframes nightSkyColor {
+    0% {
+        background: linear-gradient(to bottom, #1a237e, #311b92);
+    }
+    50% {
+        background: linear-gradient(to bottom, #283593, #4527a0);
+    }
+    100% {
+        background: linear-gradient(to bottom, #1a237e, #311b92);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulsate {
+    0% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.5;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .flip-card {
+        width: 60px;
+        height: 80px;
+    }
+
+    .flip-card-front, .flip-card-back {
+        font-size: 2.2rem;
+    }
+
+    .countdown-separator {
+        font-size: 2rem;
+    }
+
+    .countdown-label {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .flip-card {
+        width: 50px;
+        height: 65px;
+    }
+
+    .flip-card-front, .flip-card-back {
+        font-size: 1.8rem;
+    }
+
+    .countdown-separator {
+        font-size: 1.8rem;
+        margin: 0 -5px;
+    }
+
+    .countdown-label {
+        font-size: 0.7rem;
+    }
+
+    .celestial-body {
+        width: 40px;
+        height: 40px;
+        right: 40px;
+    }
+}

@@ -1,0 +1,639 @@
+.itinerary-board {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+.itinerary-header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.itinerary-header h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 8s ease infinite;
+}
+
+.itinerary-header p {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+}
+
+.days-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+/* Day Card */
+.day-card {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all 0.3s var(--easing-standard);
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.day-card.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.day-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem;
+    background: linear-gradient(to right, var(--bg-card-header), var(--bg-card));
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.day-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s var(--easing-standard);
+}
+
+.day-header:hover::after {
+    transform: translateX(100%);
+}
+
+.day-info {
+    flex: 1;
+}
+
+.day-title {
+    margin: 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+}
+
+.day-date {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+}
+
+.day-weather {
+    display: flex;
+    align-items: center;
+    margin-right: 1.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s var(--easing-decelerate);
+}
+
+.day-weather.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.weather-icon {
+    font-size: 1.8rem;
+    margin-right: 0.5rem;
+    position: relative;
+}
+
+.weather-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Weather animations for each type */
+.weather-icon[data-weather="sunny"] .weather-animation {
+    background: radial-gradient(circle, rgba(255,235,59,0.2) 0%, rgba(255,235,59,0) 70%);
+    animation: pulse 2s infinite;
+}
+
+.weather-icon[data-weather="partly-cloudy"] .weather-animation::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: floatCloud 4s infinite alternate;
+}
+
+.weather-icon[data-weather="cloudy"] .weather-animation::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    width: 20px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    animation: floatCloud 4s infinite alternate;
+}
+
+.weather-icon[data-weather="rainy"] .weather-animation::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    width: 2px;
+    height: 10px;
+    background-color: rgba(100, 181, 246, 0.8);
+    border-radius: 2px;
+    animation: rain 1.5s infinite;
+}
+
+.weather-icon[data-weather="stormy"] .weather-animation::after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 235, 59, 0.8);
+    border-radius: 50%;
+    animation: lightning 3s infinite;
+}
+
+.weather-temp {
+    font-weight: var(--font-weight-medium);
+}
+
+.expand-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.expand-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.arrow {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--text-color);
+    border-bottom: 2px solid var(--text-color);
+    transition: transform 0.3s var(--easing-bounce);
+}
+
+.arrow.down {
+    transform: rotate(45deg);
+}
+
+.arrow.up {
+    transform: rotate(-135deg);
+}
+
+.day-content {
+    overflow: hidden;
+    transition: height 0.4s var(--easing-standard);
+}
+
+/* Activities Container */
+.activities-container {
+    padding: 1rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Activity Item */
+.activity-item {
+    display: grid;
+    grid-template-columns: auto auto auto 1fr auto;
+    gap: 0.8rem;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s var(--easing-standard);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.activity-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.activity-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s var(--easing-standard);
+}
+
+.activity-item:hover::before {
+    transform: scaleX(1);
+}
+
+/* Activity item states */
+.activity-item.dragging {
+    opacity: 0.5;
+    box-shadow: none;
+    transform: scale(0.98);
+}
+
+.activity-item.drop-target {
+    box-shadow: 0 0 0 2px var(--primary-color);
+    transform: scale(1.02);
+}
+
+.activity-item.editing {
+    cursor: default;
+    grid-template-columns: 1fr;
+    padding: 1.2rem;
+}
+
+/* Drag handle */
+.drag-handle {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.drag-handle:hover {
+    opacity: 1;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.drag-icon {
+    width: 16px;
+    height: 2px;
+    background-color: var(--text-color);
+    margin: 2px 0;
+    position: relative;
+}
+
+.drag-icon::before,
+.drag-icon::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    background-color: var(--text-color);
+    left: 0;
+}
+
+.drag-icon::before {
+    top: -4px;
+}
+
+.drag-icon::after {
+    bottom: -4px;
+}
+
+/* Activity time */
+.activity-time {
+    font-weight: var(--font-weight-medium);
+    color: var(--primary-color);
+    padding: 0.3rem 0.5rem;
+    background-color: rgba(29, 122, 252, 0.1);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.activity-item:hover .activity-time {
+    background-color: rgba(29, 122, 252, 0.2);
+}
+
+/* Activity icon */
+.activity-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.activity-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Color and animation for each activity type */
+.activity-icon.travel {
+    background-color: rgba(116, 192, 252, 0.2);
+    color: var(--activity-travel);
+}
+
+.activity-icon.food {
+    background-color: rgba(255, 169, 77, 0.2);
+    color: var(--activity-food);
+}
+
+.activity-icon.sightseeing {
+    background-color: rgba(105, 219, 124, 0.2);
+    color: var(--activity-sightseeing);
+}
+
+.activity-icon.accommodation {
+    background-color: rgba(151, 117, 250, 0.2);
+    color: var(--activity-accommodation);
+}
+
+.activity-icon.shopping {
+    background-color: rgba(255, 135, 135, 0.2);
+    color: var(--activity-shopping);
+}
+
+/* Activity content */
+.activity-content {
+    flex: 1;
+}
+
+.activity-title {
+    margin: 0 0 0.2rem;
+    font-size: 1.1rem;
+}
+
+.activity-description {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    margin: 0 0 0.4rem;
+}
+
+.activity-location {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    margin: 0;
+}
+
+.location-icon {
+    margin-right: 0.3rem;
+    font-size: 0.9rem;
+}
+
+/* Activity actions */
+.activity-actions {
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.activity-item:hover .activity-actions {
+    opacity: 1;
+}
+
+.edit-btn,
+.delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.edit-btn:hover {
+    background-color: rgba(29, 122, 252, 0.1);
+}
+
+.delete-btn:hover {
+    background-color: rgba(250, 82, 82, 0.1);
+}
+
+.edit-icon,
+.delete-icon {
+    font-size: 1rem;
+}
+
+/* Activity edit form */
+.activity-edit-form {
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--secondary-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-card);
+    color: var(--text-color);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(29, 122, 252, 0.2);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+/* Add activity button */
+.add-activity-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.8rem;
+    background-color: transparent;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--secondary-color);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s var(--easing-standard);
+    margin-top: 0.5rem;
+}
+
+.add-activity-btn:hover {
+    background-color: rgba(29, 122, 252, 0.05);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.plus-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s var(--easing-bounce);
+}
+
+.add-activity-btn:hover .plus-icon {
+    transform: rotate(90deg);
+}
+
+/* Animation keyframes */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+}
+
+@keyframes floatCloud {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(7px);
+    }
+}
+
+@keyframes rain {
+    0% {
+        transform: translateY(0) scaleY(1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(15px) scaleY(2);
+        opacity: 0;
+    }
+}
+
+@keyframes lightning {
+    0%, 50%, 100% {
+        opacity: 0;
+    }
+    49%, 51%, 53%, 65% {
+        opacity: 0;
+    }
+    52%, 54%, 64% {
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .activity-item {
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas:
+      "drag time actions"
+      "icon content content";
+        gap: 0.5rem 0.8rem;
+    }
+
+    .drag-handle {
+        grid-area: drag;
+    }
+
+    .activity-time {
+        grid-area: time;
+    }
+
+    .activity-actions {
+        grid-area: actions;
+        opacity: 1;
+    }
+
+    .activity-icon-container {
+        grid-area: icon;
+    }
+
+    .activity-content {
+        grid-area: content;
+    }
+}

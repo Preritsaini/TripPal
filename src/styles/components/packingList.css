@@ -1,0 +1,705 @@
+.packing-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    animation: fadeIn 0.6s var(--easing-decelerate);
+}
+
+.packing-list-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.packing-list-header h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 8s ease infinite;
+}
+
+/* Category Tabs */
+.category-tabs-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.category-tabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    scroll-behavior: smooth;
+    position: relative;
+    flex: 1;
+    padding: 0.5rem 0;
+}
+
+.category-tabs::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+}
+
+.category-tab {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.2rem;
+    margin: 0 0.3rem;
+    white-space: nowrap;
+    background-color: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--text-color);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s var(--easing-standard);
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.category-tab.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.category-tab:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.category-tab.active {
+    color: var(--primary-color);
+}
+
+.category-icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    transition: transform 0.3s var(--easing-bounce);
+}
+
+.category-tab:hover .category-icon {
+    transform: scale(1.2);
+}
+
+.tab-indicator {
+    position: absolute;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    border-radius: 3px;
+    transition: transform 0.3s var(--easing-standard), width 0.3s var(--easing-standard);
+    opacity: 0;
+}
+
+.tab-indicator.visible {
+    opacity: 1;
+}
+
+.tab-scroll-btn {
+    background: transparent;
+    border: none;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.tab-scroll-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.scroll-arrow {
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--text-color);
+    border-right: 2px solid var(--text-color);
+    transition: border-color 0.2s ease;
+}
+
+.scroll-arrow.left {
+    transform: rotate(-135deg);
+}
+
+.scroll-arrow.right {
+    transform: rotate(45deg);
+}
+
+.tab-scroll-btn:hover .scroll-arrow {
+    border-color: var(--primary-color);
+}
+
+/* Packing List Actions */
+.packing-list-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+.toggle-label {
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+}
+
+.sort-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sort-container label {
+    font-size: 0.95rem;
+    color: var(--secondary-color);
+}
+
+.sort-container select {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-card);
+    color: var(--text-color);
+}
+
+.add-item-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.3s var(--easing-standard);
+}
+
+.add-item-btn:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.plus-icon {
+    font-size: 1.2rem;
+    transition: transform 0.3s var(--easing-bounce);
+}
+
+.add-item-btn:hover .plus-icon {
+    transform: rotate(90deg);
+}
+
+/* Add Item Form */
+.add-item-form {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-md);
+    animation: slideDown 0.4s var(--easing-standard);
+    position: relative;
+    overflow: hidden;
+}
+
+.add-item-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.form-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-form-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.close-form-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--secondary-color);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Items List */
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+/* Checklist Item */
+.checklist-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s var(--easing-standard);
+    position: relative;
+    overflow: hidden;
+}
+
+.checklist-item:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* Animation for new items */
+.checklist-item.animating {
+    animation: slideInRight 0.5s var(--easing-bounce);
+}
+
+/* Animation for removing items */
+.checklist-item.removing {
+    animation: slideOutLeft 0.5s var(--easing-standard) forwards;
+}
+
+.item-checkbox {
+    margin-right: 1rem;
+}
+
+/* Custom checkbox */
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+    width: 20px;
+    height: 20px;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s var(--easing-standard);
+}
+
+.checkbox-container:hover .checkmark {
+    border-color: var(--primary-color);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 6px;
+    top: 2px;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkmark.animated:after {
+    animation: checkmark-appear 0.3s var(--easing-bounce);
+}
+
+.item-content {
+    flex: 1;
+}
+
+.item-name {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.2rem;
+    transition: all 0.3s var(--easing-standard);
+}
+
+.checklist-item.packed .item-name {
+    color: var(--secondary-color);
+    text-decoration: line-through;
+}
+
+.item-details {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+}
+
+.item-category {
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.item-priority {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.item-actions {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.item-actions.visible {
+    opacity: 1;
+}
+
+.remove-item-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+}
+
+.remove-item-btn:hover {
+    background-color: rgba(250, 82, 82, 0.1);
+}
+
+.trash-icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s var(--easing-bounce);
+}
+
+.remove-item-btn:hover .trash-icon {
+    transform: translateY(-2px);
+}
+
+/* Progress line animation for packed items */
+.progress-line {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--success-color), #63e6be);
+    animation: progressLine 1s var(--easing-standard) forwards;
+}
+
+/* Empty list message */
+.empty-list {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--secondary-color);
+    animation: fadeIn 0.5s var(--easing-decelerate);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Progress Indicator */
+.progress-indicator {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s var(--easing-standard);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-indicator.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.progress-message {
+    font-weight: var(--font-weight-medium);
+    font-size: 1.2rem;
+}
+
+.progress-stats {
+    color: var(--secondary-color);
+}
+
+.packed-count {
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.total-count {
+    font-weight: var(--font-weight-medium);
+}
+
+.progress-bar-container {
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-lg);
+    background-color: var(--primary-color);
+    transition: width 0.5s var(--easing-standard);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    background-image: linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.15) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.15) 50%,
+            rgba(255, 255, 255, 0.15) 75%,
+            transparent 75%,
+            transparent
+    );
+    background-size: 40px 40px;
+    animation: progressStripes 1s linear infinite;
+}
+
+.progress-percentage {
+    color: white;
+    font-weight: var(--font-weight-bold);
+    font-size: 0.9rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Celebration animation for 100% completion */
+.progress-celebration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.celebration-particle {
+    position: absolute;
+    bottom: 24px;
+    width: 8px;
+    height: 8px;
+    background-color: #ffeb3b;
+    border-radius: 50%;
+    animation: celebrationParticle 1.5s ease-out infinite;
+}
+
+/* Animation keyframes */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes checkmark-appear {
+    0% {
+        height: 0;
+        width: 0;
+        opacity: 0;
+    }
+    30% {
+        height: 0;
+        width: 4px;
+        opacity: 1;
+    }
+    100% {
+        height: 10px;
+        width: 4px;
+        opacity: 1;
+    }
+}
+
+@keyframes progressLine {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes progressStripes {
+    0% {
+        background-position: 40px 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+@keyframes celebrationParticle {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-80px) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .packing-list-actions,
+    .progress-text,
+    .form-row {
+        flex-direction: column;
+    }
+
+    .filter-actions {
+        margin-bottom: 1rem;
+    }
+
+    .progress-stats {
+        margin-top: 0.5rem;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+}
